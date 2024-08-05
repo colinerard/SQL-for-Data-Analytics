@@ -7,7 +7,7 @@ STEPS:
     2. Join the data from 1. to the skills tables & data (using CTE or subquery)
 */
 
-WITH top_10_paying_jobs AS (
+WITH top_20_paying_jobs AS (
     SELECT
         job_id,
         name AS company_name,
@@ -23,22 +23,23 @@ WITH top_10_paying_jobs AS (
         (job_title_short LIKE '%Data Analyst%' 
         OR job_title_short LIKE '%Business Analyst')
         AND
-        (job_location LIKE '%Switzerland%'
-        OR job_location LIKE '%Germany%')
+        (job_country LIKE '%Switzerland%'
+        OR job_country LIKE '%Germany%'
+        OR job_country LIKE '%Netherlands%')
         AND
         salary_year_avg IS NOT NULL
     ORDER BY
         salary_year_avg DESC
-    LIMIT 10
+    LIMIT 20
 )
 
 SELECT 
     skills AS skills_name,
     COUNT(*)
-FROM top_10_paying_jobs
+FROM top_20_paying_jobs
 INNER JOIN
     skills_job_dim
-    ON top_10_paying_jobs.job_id = skills_job_dim.job_id
+    ON top_20_paying_jobs.job_id = skills_job_dim.job_id
 INNER JOIN
     skills_dim
     ON skills_job_dim.skill_id = skills_dim.skill_id
@@ -51,7 +52,6 @@ ORDER BY
 /*Results
 1. Tableau is the most requested with 4 roles demanding this skill.
 2. IT is closely followed by spark, sql and python with 3 roles each requiring some level of technical literacy.
-3. Overall, a wide variety of tools chosen and difficult to draw any meaningful insight above from the 2 points above.
 
 -» In addition, could decide to have a bit less of a precise query and load the output of the one below in ChatGPT / excel to visualise it
 

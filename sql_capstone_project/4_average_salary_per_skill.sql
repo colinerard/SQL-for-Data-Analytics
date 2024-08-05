@@ -22,8 +22,9 @@ WHERE
     (job_title_short LIKE '%Data Analyst%' 
     OR job_title_short LIKE '%Business Analyst')
     AND
-    (job_location LIKE '%Switzerland%'
-    OR job_location LIKE '%Germany%')
+    (job_country LIKE '%Switzerland%'
+    OR job_country LIKE '%Germany%'
+    OR job_country LIKE '%Netherlands%')
     AND
     salary_year_avg IS NOT NULL
 GROUP BY 
