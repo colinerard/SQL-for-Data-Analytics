@@ -182,8 +182,9 @@ It is time to dig deeper and identify the top 20 paying roles across these 3 cou
 
 ### Learnings
  - **Best-paying roles** are around 200k and are concentrated within one enterprise in Germany. These are highly technical and senior roles as Research Engineers.
- - **Germany** seem to have the highest concentration of high-paying roles with 13 of the 20 roles in top 20. The 7 remaining roles were in the Netherlands. Larger metropolis are where these roles are most likely to be located as well. 
- - **Data analyst** titles can reasonably expect to earn around 110-120k within companies across a variety of different industries (e.g. delivery services, banking, IT,  media and entertainment) 
+ - **Germany** seem to have the highest concentration of high-paying roles with 15 of the 20 roles in top 20. The 5 remaining roles were in the Netherlands. Larger urban centres are where these roles are most likely to be located. 
+ - **Data analyst** titles can reasonably expect to earn around 110-120k at the top end within companies across a variety of different industries (e.g. delivery services, banking, IT,  media and entertainment).
+ - **Lack of visibility on industry-wide salaries in these regions** as many roles in Europe do not disclose any salary information within the job postings, making our sample a lot smaller.   
 
 ## 3 - More generally, what are the top skills across all data analysts and business analysts roles?
 To gain a wider perspective on the skills required to increase the likelihood to land a job as a data analyst or business analyst, it would be interesting to look at the top 5 most requested roles across all jobs (across the chosen geographies of Germany, Netherlands and Switzerland).
@@ -276,7 +277,7 @@ Looking at all available postings in Germany, the Netherlands and Switzerland, w
 
 
 ## Learnings
-- **Data engineering software**, such as spark, and **cloud computing software**, such as AWS, are the most lucrative skills to possess. ERP softare with SAP seems to always command a slight salary premium.
+- **Data engineering software**, such as spark, and **cloud computing software**, such as AWS, are the most lucrative skills to possess. **ERP software** like SAP seems to always command a slight salary premium.
 - **Data visualiation** skills are slightly more lucrative than data programming skills, showcasing the value of being able to transpose complex sets of data into user-friendly reports and dashboards.
 
 ## 5 - What are the skills required by the highest paying jobs?
