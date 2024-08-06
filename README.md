@@ -16,12 +16,13 @@ Below are the questions and the order in which they were solved to reach an over
     This allows to narrow down the search to countries where the average salaries are the highest. Regardless of the average salaries in Switzerland, this country will be included in the sample as this is a country of interest for the author.    
 2. **What are the top-paying job postings in the countries of interest?** 
     This allows to identify the top 20 highest paying roles and dive deeper in the expected salaries for the targeted roles. 
-3. **What are the skills required by the highest paying jobs?**
-    This allows to identify the specific technical skills necessary to increase the likelihood of success in obtaining the roles and being successful.
-4. **More generally, what are the top skills across all data analysts and business analysts roles?**
+3. **What are the top skills across all data analysts and business analysts roles?**
     This is a wider look at the required skills for these positions, extending the search to a wider sample than the top 20 highest paying roles in the chosen geographies. This grants a wider view of potential skills in high-demand.
-5. **What is the skill leading to a higher average salary?**
+4. **What is the skill leading to a higher average salary?**
     This allows to identify potential outliars in terms of skills commanding a higher salary premium, meaning it could interesting to further develop these skills.
+5. **What are the skills required by the highest paying jobs?**
+    This allows to identify the specific technical skills necessary to increase the likelihood of success in obtaining one of the top 20 highest-paying roles identified earlier.
+
 
 ### Why do this?
 This is a high-level investigation of roles of interest in the data science and analysis field. This exercise also serves as a practice to further develop and fine-tune SQL skills using a variety of tools.
@@ -135,7 +136,7 @@ It is time to dig deeper and identify the top 20 paying roles across these 3 cou
         job_title,
         job_title_short,
         job_location,
-        salary_year_avg,
+        salary_year_avg
     FROM
         job_postings_fact
     LEFT JOIN company_dim
@@ -150,21 +151,136 @@ It is time to dig deeper and identify the top 20 paying roles across these 3 cou
         AND
         salary_year_avg IS NOT NULL
     ORDER BY
-        salary_year_avg DESC
+        salary_year_avg DESC,
+        job_title
     LIMIT 20
     ;
 ```
 ### Results
-
-Add results table
+|job_id  |company_name|job_title|job_title_short    |job_location          |salary_year_avg|
+|--------|------------|---------|-------------------|----------------------|---------------|
+|107183  |Bosch Group |Research Engineer (f/m/div.)|Data Analyst       |Hildesheim, Germany   |200000.0       |
+|1202839 |Bosch Group |Technology Research Engineer for Power Semiconductors (f/m/div.)|Data Analyst       |Renningen, Germany    |200000.0       |
+|156108  |Bosch Group |Research Engineer for Security and Privacy  (f/m/div.)|Data Analyst       |Renningen, Germany    |199675.0       |
+|1263109 |Fraunhofer-Gesellschaft|Research Engineer* / Research Scientist* for Development of Radar...|Data Analyst       |Germany               |179500.0       |
+|24675   |ServiceNow  |Staff Research Engineer|Data Analyst       |Amsterdam, Netherlands|177283.0       |
+|59701   |Volt.io     |Head of Data Analytics|Data Analyst       |Berlin, Germany       |166419.5       |
+|20461   |PPRO        |Head of Data Analytics (F/M/X)|Data Analyst       |Munich, Germany       |166419.5       |
+|931367  |Datalogue GmbH|Data Architect (m/w/d)|Data Analyst       |Hamburg, Germany      |165000.0       |
+|1719883 |LyondellBasell|Data Architect - Sustainability|Data Analyst       |Netherlands           |155000.0       |
+|1051496 |Netflix     |Analytics Engineer (L5) - Promotional Media - EMEA|Data Analyst       |Amsterdam, Netherlands|147500.0       |
+|1432577 |Salesforce  |Sr. Business Analyst - Business Data Governance|Business Analyst   |Mühlhausen, Germany   |126000.0       |
+|647890  |Delivery Hero|Senior Data Analyst|Senior Data Analyst|Germany               |119400.0       |
+|1437705 |AUTO1 Group |(Senior) Product Data Analyst (f/m/x)|Senior Data Analyst|Berlin, Germany       |111202.0       |
+|348471  |Adyen       |Data Analyst, Reporting|Data Analyst       |Amsterdam, Netherlands|111202.0       |
+|537995  |Flink       |Data Analyst/Manager - Last Mile Planning (m/f/d)|Data Analyst       |Berlin, Germany       |111202.0       |
+|993951  |SIXT        |(Senior) Data Analyst (m/w/d)|Senior Data Analyst|Rostock, Germany      |111175.0       |
+|634495  |TeamViewer  |(Senior) Data Analyst / Data Engineer (all genders)|Senior Data Analyst|Göppingen, Germany    |111175.0       |
+|221741  |Wolt        |(Senior) Data Analyst, Support domain|Senior Data Analyst|Berlin, Germany       |111175.0       |
+|774732  |Grover      |(Senior) People Data Analyst (m/w/x)|Data Analyst       |Germany               |111175.0       |
+|1344481 |Magno IT Recruitment|4295 Senior Data Analyst|Senior Data Analyst|Utrecht, Netherlands  |111175.0       |
 
 ### Learnings
  - **Best-paying roles** are around 200k and are concentrated within one enterprise in Germany. These are highly technical and senior roles as Research Engineers.
- - **Germany** seem to have the highest concentration of high-paying roles with 15 of the 20 roles in top 20. 
- - **Data analyst** titles can reasonably expect to earn around 110-120k within companies across a variety of different industries (e.g. delivery services, banking, media and entertainment) 
+ - **Germany** seem to have the highest concentration of high-paying roles with 13 of the 20 roles in top 20. The 7 remaining roles were in the Netherlands. Larger metropolis are where these roles are most likely to be located as well. 
+ - **Data analyst** titles can reasonably expect to earn around 110-120k within companies across a variety of different industries (e.g. delivery services, banking, IT,  media and entertainment) 
 
-## 3 - What are the skills required by the highest paying jobs?
-To be successful in these roles, specific technical skills are required. Let's look at the most requested skills amongst the top 20 best paying jobs across Germany, the Netherlands and Switzerland.
+## 3 - More generally, what are the top skills across all data analysts and business analysts roles?
+To gain a wider perspective on the skills required to increase the likelihood to land a job as a data analyst or business analyst, it would be interesting to look at the top 5 most requested roles across all jobs (across the chosen geographies of Germany, Netherlands and Switzerland).
+
+To get a more comprehensive picture, roles without salary information are also included in this analysis.
+
+### SQL
+```SQL
+    SELECT
+        skills AS skill_name,
+        COUNT(*) AS skill_count
+    FROM job_postings_fact
+    INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+    INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+    WHERE
+        (job_title_short LIKE '%Data Analyst%' 
+        OR job_title_short LIKE '%Business Analyst')
+        AND
+        (job_country LIKE '%Switzerland%'
+        OR job_country LIKE '%Germany%'
+        OR job_country LIKE '%Netherlands%')
+    GROUP BY 
+        skill_name
+    ORDER BY 
+        skill_count DESC
+    LIMIT 5
+```
+### Results
+|skill_name|skill_count|
+|----------|-----------|
+|sql       |8017       |
+|python    |6123       |
+|excel     |3642       |
+|tableau   |3627       |
+|power bi  |3150       |
+
+### Learnings
+- **Data programming languages** are the most widely requested skills across the job postings in the geographies of interest. **SQL and Python** are far ahead of any other hard skill when it comes to the number of jobs requesting them.
+- **Excel** is still a highly demanded skill due to its versatility and ease of use across a variety of use cases. Spreadsheet skills are still very much relevant.
+- **Data visualisation** softwares are again quite in demand and could give an edge to any job seekers in additon to data analysis / querying skills.
+
+## 4 - What is the skill leading to a higher average salary? 
+Now that the skills most in request for data and business analyst roles have been identified, let's look at the average salary commanded by each of the skills listed in the job postings to identify the most lucrative ones and if they match with the most requested ones.
+
+Looking at all available postings in Germany, the Netherlands and Switzerland, we have calculated the average yearly salary associated to each skill.
+
+## SQL
+```SQL
+    SELECT
+        skills AS skill_name,
+        ROUND(AVG(salary_year_avg), 0) AS yearly_salary,
+        COUNT(*) AS skill_count
+    FROM job_postings_fact
+    INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+    INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+    WHERE
+        (job_title_short LIKE '%Data Analyst%' 
+        OR job_title_short LIKE '%Business Analyst')
+        AND
+        (job_country LIKE '%Switzerland%'
+        OR job_country LIKE '%Germany%'
+        OR job_country LIKE '%Netherlands%')
+        AND
+        salary_year_avg IS NOT NULL
+    GROUP BY 
+        skill_name
+    HAVING
+        COUNT(*) > 5
+    ORDER BY 
+        yearly_salary DESC
+    ;
+```
+
+## Results
+|skill_name|yearly_salary|skill_count|
+|----------|-------------|-----------|
+|spark     |113885       |14         |
+|aws       |101250       |6          |
+|sap       |100770       |7          |
+|tableau   |98946        |28         |
+|python    |96612        |36         |
+|looker    |96024        |13         |
+|go        |95167        |12         |
+|power bi  |93943        |16         |
+|sql       |93164        |53         |
+|r         |89404        |18         |
+|excel     |84747        |21         |
+
+*The count of jobs is here much lower than at step 3 as all postings without any salary information were removed.*
+
+
+## Learnings
+- **Data engineering software**, such as spark, and **cloud computing software**, such as AWS, are the most lucrative skills to possess. ERP softare with SAP seems to always command a slight salary premium.
+- **Data visualiation** skills are slightly more lucrative than data programming skills, showcasing the value of being able to transpose complex sets of data into user-friendly reports and dashboards.
+
+## 5 - What are the skills required by the highest paying jobs?
+To complete this short analysis, let's now look at the skills required to land one of the top 20 best paying job and if this is in line with all the other jobs out on the market (the results of questions 3 and 4). Let's look at the 10 most requested skills amongst the top 20 best paying jobs across Germany, the Netherlands and Switzerland.
 
 ### SQL
 ```sql
@@ -212,91 +328,34 @@ To be successful in these roles, specific technical skills are required. Let's l
 ```
 ### Results
 
+|skills_name|count|
+|-----------|-----|
+|sql        |8    |
+|python     |7    |
+|tableau    |6    |
+|spark      |5    |
+|go         |4    |
+|looker     |4    |
+|r          |4    |
+|excel      |3    |
+|gcp        |2    |
+|power bi   |2    |
+
 
 ### Learnings
-- **Programming** is a highley-demanded skill, with 9 roles requesting Python knowledge and 8 requiring familiarity with SQL, a data analysis and querying programming language. R is also expected for 6 roles.
-- **Data visualition and business intelligence** software are also in demand with tableau being demanded by 6 roles. Only 1 job-posting demanded Power BI knowledge, showing a clear favourite amongst the main BI software.
-- **Data engineering and machine learning** is also somewhat prevalent with 5 roles requesting spark know-how.    
-
-## 4 - More generally, what are the top skills across all data analysts and business analysts roles?
-To gain a wider perspective on the skills required to increase the likelihood to land a job as a data analyst or business analyst, it would be interesting to look at the top 5 most requested roles across all jobs (across the chosen geographies of Germany, Netherlands and Switzerland).
-
-To get a more comprehensive picture, roles without salary information are also included in this analysis.
-
-### SQL
-```SQL
-    SELECT
-        skills AS skill_name,
-        COUNT(*) AS skill_count
-    FROM job_postings_fact
-    INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
-    INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
-    WHERE
-        (job_title_short LIKE '%Data Analyst%' 
-        OR job_title_short LIKE '%Business Analyst')
-        AND
-        (job_country LIKE '%Switzerland%'
-        OR job_country LIKE '%Germany%'
-        OR job_country LIKE '%Netherlands%')
-    GROUP BY 
-        skill_name
-    ORDER BY 
-        skill_count DESC
-    LIMIT 5
-```
-### Results
-
-### Learnings
-- **SQL** is the most widely requested skill across the job postings in the geographies of interest. **Python** is also of relevance and would be of great use for job seekers.
-- **Excel** is still a highly demanded skill due to its versatility and ease of use across a variety of use cases. Spreadsheet skills are still very much relevant.
-- **Data visualisation** softwares are again quite in demand and could give an edge to any job seekers in additon to data analysis / querying skills.
-
-## 5 - What is the skill leading to a higher average salary? 
-Lastly, now that the skills most likely to help land a job as a business analyst or data analyst have been identified, let's look at the highest paying skills across these jobs.
-
-Looking at all available postings in Germany, the Netherlands and Switzerland, we have calculated the average yearly salary associated to each skill.
-
-## SQL
-```SQL
-    SELECT
-        skills AS skill_name,
-        ROUND(AVG(salary_year_avg), 0) AS yearly_salary,
-        COUNT(*) AS skill_count
-    FROM job_postings_fact
-    INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
-    INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
-    WHERE
-        (job_title_short LIKE '%Data Analyst%' 
-        OR job_title_short LIKE '%Business Analyst')
-        AND
-        (job_country LIKE '%Switzerland%'
-        OR job_country LIKE '%Germany%'
-        OR job_country LIKE '%Netherlands%')
-        AND
-        salary_year_avg IS NOT NULL
-    GROUP BY 
-        skill_name
-    HAVING
-        COUNT(*) > 5
-    ORDER BY 
-        yearly_salary DESC
-    ;
-```
-
-## Results
-
-## Learnings
-- **Data engineering software**, such as spark, and **cloud computing software**, such as AWS, are the most lucrative skills to possess.
-- **Data visualiation** skills are slightly more lucrative than data programming skills, showcasing the value of being able to transpose finding in a convincing and user-friendly way.
-
+- **Programming** is a highley-demanded skill, with 8 roles requesting SQL knowledge and 7 requiring familiarity with Python. R is slighlty less popular with only 4 roles marking it as a requirement.
+- **Data visualition and business intelligence** software are also in demand with tableau being demanded by 6 roles. Only 2 job postings demanded Power BI knowledge, showing a clear favourite amongst the main BI software.
+- **Data engineering and machine learning** is also somewhat prevalent with 5 roles requesting spark know-how.
 
 # Conclusions
 ### Main insight
-It seems that the best paying roles in Europe for data analyst and business analyst are mostly prevalent in the Germanic regions, although closely followed by Iberic peninsula countries (Spain and Portugal). When looking at the salaries in comparison with the average living cost across the countries, it would be interesting to compare where one is better off, as the slightly lower salaries in the latin countries may be more than compensated by lower costs.
+It seems that the best paying roles in Europe for data analyst and business analyst are mostly prevalent in the Germanic and Dutch regions, although closely followed by Iberic peninsula countries (Spain and Portugal). When looking at the salaries in comparison with the average living cost across the countries, it would be interesting to compare where one is better off, as the slightly lower salaries in the latin countries may be more than compensated by lower costs.
 
 Without any surprise, data programming skills are the most in demand for the type of roles, with skills such as sql and python highly requested. Job seekers looking to increase their likelihood of hiring in this domain should definitely focus on improving these key skills, and should not neglect data visualisation skills (tableau) to add an edge to their skills portfolio. 
 
-The average salary in the observed regions for these analysts roles is slightly under 100k per year. Having familiarity with highly specialised software such as spark or the aws suite of products is a good method to increase the chances of getting a higher pay. 
+The average salary in the observed regions for these analysts roles is slightly under 100k per year. Having familiarity with highly specialised software such as spark or the aws suite of products is a good method to increase the chances of getting a higher pay.
+
+When looking at the top paying-jobs, these also require a command of data programming, highlighting the importance of these skills at all levels of jobs across these markets.
 
 ### What I learned
 In addition to the learnings related to the analysis and query of the database, this project allowed to significantly develop my data analysis skills. Here are my top 3 takeaways:

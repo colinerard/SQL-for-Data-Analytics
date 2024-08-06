@@ -35,6 +35,3 @@ ORDER BY
     yearly_salary DESC
 ;
 
-/*
-We could again extract the results and feed them to ChatGPT to extract insights and come up with descriptive text.
-*/

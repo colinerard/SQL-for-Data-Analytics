@@ -29,27 +29,7 @@ STEPS:
         AND
         salary_year_avg IS NOT NULL
     ORDER BY
-        salary_year_avg DESC
-    LIMIT 20
-    ;
-
-
-    SELECT
-        job_country,
-        COUNT(*)
-    FROM
-        job_postings_fact
-    LEFT JOIN company_dim
-        ON job_postings_fact.company_id = company_dim.company_id
-    WHERE
-        (job_title_short LIKE '%Data Analyst%' 
-        OR job_title_short LIKE '%Business Analyst')
-        AND
-        (job_country LIKE '%Switzerland%'
-        OR job_country LIKE '%Germany%'
-        OR job_country LIKE '%Netherlands%')
-        AND
-        salary_year_avg > 111175
-    GROUP BY job_country
+        salary_year_avg DESC,
+        job_title
     LIMIT 20
     ;
