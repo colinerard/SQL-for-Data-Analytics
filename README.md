@@ -1,4 +1,4 @@
-# Introduction & Exex Summary
+# Introduction & Exec Summary
 This is test project using some real job market data for data-focused roles. This project focuses on Data and Business Analyst roles, exploring top paying countries in Europe, identifying top-paying positions in the chosen geographies and most in-demand technical skills.
 
 ### Key finding
