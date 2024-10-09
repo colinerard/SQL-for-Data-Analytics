@@ -38,7 +38,7 @@ VALUES      (1,
             );
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Altering table
 */
@@ -47,7 +47,7 @@ ALTER TABLE data_science_jobs
 ADD remote BOOLEAN;
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Rename a column
 */
@@ -56,7 +56,7 @@ ALTER TABLE data_science_jobs
 RENAME COLUMN post_date TO posted_on
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Set default value in a column
 */
@@ -76,7 +76,7 @@ VALUES      (4,
             '2023-02-05')
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Drop a column
 */
@@ -85,7 +85,7 @@ ALTER TABLE data_science_jobs
 DROP COLUMN company_name
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Update a value
 */
@@ -95,7 +95,7 @@ SET     remote = TRUE
 WHERE   job_id = 2;
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Drop a table
 */

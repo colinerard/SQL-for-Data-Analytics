@@ -1,5 +1,5 @@
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Calculate average salaries, both yearly and hourly and group by job postings
 */
@@ -19,7 +19,7 @@ ORDER BY
 
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Count the number of job postings per month in 2023
 */
@@ -37,7 +37,7 @@ ORDER BY
     column_month
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Find companies with job offering health insurance posted in 2nd quarter
 */

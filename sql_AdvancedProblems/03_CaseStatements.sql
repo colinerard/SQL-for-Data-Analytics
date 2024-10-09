@@ -1,5 +1,5 @@
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Classify jobs base on the salary in 3 categories: high, medium and low.
 */
@@ -22,7 +22,7 @@ ORDER BY
     salary_year_avg DESC
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Count the number of unique companies that offer work from home versus those that don't.
 */
@@ -46,7 +46,7 @@ FROM
     job_postings_fact
 
 /*
-CREATED DATE: 2024-08-01
+CREATED DATE: 2024-09-04
 CREATED BY: Colin Erard
 DESCRIPTION: Identify jobs by experience level and remote work
 */
